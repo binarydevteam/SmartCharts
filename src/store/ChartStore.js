@@ -195,7 +195,7 @@ class ChartStore {
 
         const studiesStore = this.mainStore.studies;
         stxx.callbacks.studyOverlayEdit = study => studiesStore.editStudy(study);
-        stxx.callbacks.studyPanelEdit   = study => studiesStore.editStudy(study);
+        stxx.callbacks.studyPanelEdit = study => studiesStore.editStudy(study);
 
         this.restorePreferences();
         this.restoreLayout(stxx);
@@ -299,6 +299,10 @@ class ChartStore {
         }
     }
 
+    /**
+     * Store the Mobile mode from the chart option with pass to
+     * @param {bool} status if true, measn mobile mode is active
+     */
     setIsMobile(status) {
         this.isMobile = status;
     }

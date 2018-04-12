@@ -132,6 +132,12 @@ cq-context {
             transform: translateX(-0%) !important;
             width: 100% !important;
             justify-content: space-around;
+            .ciq-menu {
+                cq-menu-dropdown, .cq-menu-dropdown {
+                    height: 80vh;
+                    margin: 1;
+                }
+            }
         }
     }
 }
