@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from '../store/Connect';
-import { Switch, ColorPicker, Slider, Pattern, DropDown, NumberColorPicker } from './Form.jsx';
+import { Switch, ColorPicker, Slider, Pattern, DropDown, NumberColorPicker, FontSetting } from './Form.jsx';
 import { DeleteIcon, StarIcon } from './Icons.jsx';
 import '../../sass/_ciq-settings-dialog.scss';
 
@@ -70,7 +70,12 @@ const SettingsDialog = ({
                 onChange={val => onItemChange(item.id, val)}
             />
         ),
-        none: () => null,
+        font: item => (
+            <FontSetting
+                value={item.value}
+                onChange={val => onItemChange(item.id, val)}
+            />
+        ),
     };
     return (
         <Dialog className="cq-dialog cq-settings-dialog">
@@ -107,14 +112,11 @@ const SettingsDialog = ({
                 <React.Fragment>
                     <div className='items' >
                         {items
-                            .map(item => (
+                            .map(item => (renderMap[item.type] &&
                                 <div key={item.id} className='item'>
                                     <div className='title'>
                                         <span>{item.title}</span>
-                                        {renderMap[item.type] ?
-                                            renderMap[item.type](item)
-                                            : <strong>{item.type}</strong>
-                                        }
+                                        {renderMap[item.type](item)}
                                     </div>
                                 </div>
                             ))
