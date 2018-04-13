@@ -16,7 +16,6 @@ export default class DrawToolsStore {
         this.settingsDialog = new SettingsDialogStore({
             getContext: () => this.mainStore.chart.context,
             onDeleted: this.onDeleted,
-            onStared: this.onStared,
             onChanged: this.onChanged,
         });
 
@@ -33,7 +32,7 @@ export default class DrawToolsStore {
                 {id: 'crossline', text: t.translate('Crossline') },
                 {id: 'freeform', text: t.translate('Doodle') },
                 {id: 'ellipse', text: t.translate('Ellipse') },
-                {id: 'fibonacci', text: 'Fibonacci'},
+                {id: 'retracement', text: t.translate('Fib Retracement') },
                 {id: 'fibarc', text: t.translate('Fib Arc') },
                 {id: 'fibfan', text: t.translate('Fib Fan') },
                 {id: 'fibtimezone', text: t.translate('Fib Time Zone') },
@@ -97,6 +96,10 @@ export default class DrawToolsStore {
                     lineWidth: 'none',
                 };
                 this.settingsDialog.items = Object.keys(parameters)
+                    .filter(key => !( // Remove pattern option from Fibonacci tools
+                        (drawing.name.startsWith('fib') || drawing.name === 'retracement')
+                        && key === 'pattern')
+                    )
                     .map(key => ({
                         id: key,
                         title: formatCamelCase(key),
@@ -141,11 +144,7 @@ export default class DrawToolsStore {
         }
         this.activeDrawing.highlighted = false;
         this.activeDrawing.adjust();
-    }
-
-    @action.bound onStared(value) {
-        console.warn('onStared not implemented yet.');
-        // TODO: implement favorites.
+        this.mainStore.chart.saveDrawings();
     }
 
     @action.bound onDeleted() {

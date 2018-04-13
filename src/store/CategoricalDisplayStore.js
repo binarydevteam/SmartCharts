@@ -38,7 +38,8 @@ export default class CategoricalDisplayStore {
             when(() => this.context, this.initFavorites.bind(this));
         }
     }
-
+    /* isMobile: fill form the ChartStore */
+    @observable isMobile = false;
     @observable filterText = '';
     @observable placeholderText = '';
     @observable activeCategoryKey = '';
@@ -92,17 +93,21 @@ export default class CategoricalDisplayStore {
         // get first non-empty category
         let idx = i - 1;
         let id;
-        do {
+        while (idx >= 0) {
             id = this.filteredItems[idx].categoryId;
             if (this.categoryElements[id] !== null) {
                 break;
             }
             idx--;
-        } while (idx >= 0);
-        this.activeCategoryKey = id;
+        }
+        this.activeCategoryKey = id || this.filteredItems[0].categoryId;
     }
 
     init() {
+        if (this.mainStore) {
+            this.isMobile = this.mainStore.chart.isMobile;
+        }
+
         this.isInit = true;
         this.scroll = new PerfectScrollbar(this.scrollPanel);
 
@@ -205,6 +210,7 @@ export default class CategoricalDisplayStore {
 
     @action.bound handleFilterClick(category) {
         const el = this.categoryElements[category.categoryId];
+
         if (el) {
             // TODO: Scroll animation
             this.pauseScrollSpy = true;
@@ -285,6 +291,7 @@ export default class CategoricalDisplayStore {
     }
 
     connect = connect(() => ({
+        isMobile: this.isMobile,
         filterText: this.filterText,
         setFilterText: this.setFilterText,
         clearFilterText: this.clearFilterText,
@@ -303,5 +310,6 @@ export default class CategoricalDisplayStore {
         onFavoritedItem: this.onFavoritedItem,
         favoritesMap: this.favoritesMap,
         favoritesId: this.favoritesId,
+        CloseUpperMenu: this.CloseUpperMenu,
     }))
 }

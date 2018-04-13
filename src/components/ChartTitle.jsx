@@ -14,6 +14,7 @@ const ChartTitle = ({
     Menu,
     CategoricalDisplay,
     AnimatedPrice,
+    onCloseMenu
 }) => {
     const SymbolIcon = ItemIconMap[currentSymbol.symbol] || SymbolPlaceholderIcon;
     return (
@@ -36,7 +37,7 @@ const ChartTitle = ({
                 </div>}
             </Menu.Title>
             <Menu.Body>
-                <CategoricalDisplay />
+                <CategoricalDisplay  CloseMenu={ () => onCloseMenu() } />
             </Menu.Body>
         </Menu>
     );
@@ -52,5 +53,6 @@ export default connect(
         Menu: c.menu.connect(Menu),
         CategoricalDisplay: c.categoricalDisplay.connect(CategoricalDisplay),
         AnimatedPrice: c.animatedPrice.connect(AnimatedPrice),
+        onCloseMenu: c.menu.onTitleClick,
     })
 )(ChartTitle);

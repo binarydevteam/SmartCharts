@@ -93,9 +93,9 @@ class ChartStore {
         });
     }
 
-    saveDrawings(target) {
-        const obj = target.stx.exportDrawings();
-        const symbol = target.symbol;
+    saveDrawings() {
+        const obj = this.stxx.exportDrawings();
+        const symbol = this.stxx.chart.symbol;
         if (obj.length === 0) {
             CIQ.localStorage.removeItem(symbol);
         } else {
@@ -147,6 +147,7 @@ class ChartStore {
     startUI() {
         const stxx = this.stxx;
         stxx.chart.allowScrollPast = false;
+        stxx.chart.allowScrollFuture = false;
         const context = new Context(stxx, this.rootNode);
 
         context.changeSymbol = (data) => {
@@ -191,6 +192,10 @@ class ChartStore {
         };
 
         this.loader.show();
+
+        const studiesStore = this.mainStore.studies;
+        stxx.callbacks.studyOverlayEdit = study => studiesStore.editStudy(study);
+        stxx.callbacks.studyPanelEdit = study => studiesStore.editStudy(study);
 
         this.restorePreferences();
         this.restoreLayout(stxx);
@@ -294,6 +299,10 @@ class ChartStore {
         }
     }
 
+    /**
+     * Store the Mobile mode from the chart option with pass to
+     * @param {bool} status if true, measn mobile mode is active
+     */
     setIsMobile(status) {
         this.isMobile = status;
     }
@@ -366,9 +375,8 @@ class ChartStore {
                     subcategory = getSubcategory(symbol);
                 }
                 const selected = symbol.symbol === this.currentActiveSymbol.symbol;
-                const enabled = selected ? false : symbol.exchange_is_open;
                 subcategory.data.push({
-                    enabled,
+                    enabled: true,
                     selected,
                     itemId: symbol.symbol,
                     display: symbol.name,
