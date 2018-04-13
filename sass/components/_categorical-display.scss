@@ -179,6 +179,21 @@ cq-context{
         .empty-category {
             padding: 0.2em 1.2em;
         }
+        .cq-categorical-footer{
+            width: 100%;
+            height: 3em;
+            display: none;
+            .btn-categorical-display-close{
+                border:none;
+                background: transparent;
+                color: #4c5794;
+                font-weight: bold;
+                padding: 0.78em 1em;
+                width: 100%;
+                box-shadow: none;
+                cursor: pointer;
+            }
+        }
     }
 
     .stxMenuActive .cq-categorical-display {
@@ -237,21 +252,25 @@ cq-context{
     }
 
     &.smartcharts-mobile{
+        .cq-mobile-title{
+            background: #fff;
+            .mobile-title{
+                display: block;
+                font-size: 16px;
+                line-height: 40px;
+                font-weight: 400;
+                padding: 0 .7em;
+                color: #000;
+            }
+            .icon-close-menu{
+                position: absolute;
+                top: 4px;
+                right: 8px;
+            }
+        }
         .cq-categorical-display{
             flex-direction: column;
-            .cq-mobile-title{
-                .mobile-title{
-                    display: block;
-                    font-size: 1.4em;
-                    font-weight: 500;
-                    padding: .4em .7em .1em;
-                }
-                .icon-close-menu{
-                    position: absolute;
-                    top: 4px;
-                    right: 8px;
-                }
-            }
+            width: 100%;
             .cq-lookup-filters {
                 width: 100%;
                 border-right: none;
@@ -266,6 +285,7 @@ cq-context{
             }
             .cq-scroll-panel{
                 width: 100%;
+                height: calc( 100vh - 7.8em );
             }
             .cq-filter-panel{
                 display: flex;
@@ -273,7 +293,7 @@ cq-context{
                 .cq-filter {
                     border:none;
                     background: transparent;
-                    padding: 0px 30px;
+                    padding: 0px 20px;
                     line-height: 3em;
                     > .ic-icon{
                         margin: 0px;

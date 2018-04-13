@@ -23,6 +23,7 @@ const CategoricalDisplay = ({
     onFavoritedItem,
     favoritesId,
     favoritesMap,
+    dialogTitle,
     CloseMenu
 }) => {
     /**
@@ -31,8 +32,7 @@ const CategoricalDisplay = ({
      */
     const renderMobileTitle = ()=>{
         return isMobile ? <div className="cq-mobile-title">
-                <div className="mobile-title">{t.translate("Comparison")}</div>
-                <CloseIcon className="icon-close-menu" onClick={ () => CloseMenu() } />
+                <div className="mobile-title">{dialogTitle}</div>
             </div> : ''
     }
     const renderIcon = (item) => {
@@ -165,6 +165,12 @@ const CategoricalDisplay = ({
                             </div>
                     ) }
                 </div>
+            </div>
+            <div className="cq-categorical-footer">
+                <button onClick={()=> CloseMenu() }
+                    className="btn-categorical-display-close">
+                    {t.translate("Close")}
+                </button>
             </div>
         </div>
     );

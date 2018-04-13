@@ -104,7 +104,9 @@ export default class CategoricalDisplayStore {
     }
 
     init() {
-        this.isMobile = this.mainStore.chart.isMobile;
+        if (this.mainStore) {
+            this.isMobile = this.mainStore.chart.isMobile;
+        }
 
         this.isInit = true;
         this.scroll = new PerfectScrollbar(this.scrollPanel);
